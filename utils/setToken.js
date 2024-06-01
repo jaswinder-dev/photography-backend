@@ -4,7 +4,7 @@ export const setToken = async (statusCode, message, photographer, res) => {
     const token = await photographer.getJWTToken();
     const expires = new Date(Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000);
     const sameSite = 'none';
-    const domain = process.env.HOST;
+    const domain = process.env.HOST || "0.0.0.0";
     const path = "/";
 
     if (photographer.role === "Admin") {
@@ -22,17 +22,7 @@ export const setToken = async (statusCode, message, photographer, res) => {
             avatar: photographer.avatar,
             authenticationNo: roleEncryption,
         },
-        // photographer: {
-        //     _id: photographer._id,
-        //     fullname: photographer.fullname,
-        //     username: photographer.username,
-        //     avatar: photographer.avatar,
-        //     email: photographer.email,
-        //     role: photographer.role,
-        //     phone: photographer.phone,
-        //     posts: photographer.posts
-        // },
-        cookie: {
+        auth: {
             val: `token=${token}; expires=${expires.toUTCString()}; path=${path}; domain=${domain}; samesite=${sameSite} `
         }
     });
