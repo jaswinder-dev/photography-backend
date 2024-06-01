@@ -13,6 +13,7 @@ import { uploadBlog } from "../middlewares/uploadFiles.js";
 const BlogRouter = express.Router();
 
 BlogRouter.get("/get", isAuthenticated, isAuthorized, getAll);
+BlogRouter.post("/get/frontend/:id", getSingle);
 BlogRouter.post("/get/:id", isAuthenticated, isAuthorized, getSingle);
 BlogRouter.get("/get/latest", getLatest);
 BlogRouter.post("/add/blog", isAuthenticated, isAuthorized, uploadBlog, addBlog);
